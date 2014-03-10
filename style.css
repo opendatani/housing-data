@@ -1,0 +1,45 @@
+body {
+  margin-left: 80px;
+  margin-right: 80px;
+}
+h3 {
+  background-color: #3399cc;
+  color: #ffffff;
+}
+
+#leftCol {
+  float: left;
+  width: 50%;
+}
+
+#rightCol {
+  float: right;
+  width: 50%;
+}
+
+#tabs {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.ui-tabs-panel {
+  padding: 0 !important;
+}
+
+.housing-chart {
+  min-width: 310px; 
+  height: 300px; 
+  margin: 0 auto;
+  border-style:dashed;
+  border-width:1px;
+  border-color:gray;
+}
+
+#map {
+  height: 400px;
+}
+
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+padding: .2em .5em;
+font-size: 90%;
+}
