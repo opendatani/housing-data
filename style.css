@@ -28,18 +28,15 @@ h3 {
 
 .housing-chart {
   min-width: 310px; 
-  height: 300px; 
+  height: 250px; 
   margin: 0 auto;
-  border-style:dashed;
-  border-width:1px;
-  border-color:gray;
 }
 
 #map {
-  height: 400px;
+  height: 350px;
 }
 
 .ui-tabs .ui-tabs-nav .ui-tabs-anchor {
-padding: .2em .5em;
-font-size: 90%;
+  padding: .2em .5em;
+  font-size: 70%;
 }

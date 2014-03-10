@@ -87,11 +87,14 @@
         
         var housingLayer = L.layerGroup(markers);
         
-        var baseMaps = {};
+        var baseMaps = {
+          "Housing": housingLayer
+        };
 
         var overlayMaps = {
-            "Housing": housingLayer
         };
+        
+        map.addLayer(housingLayer);
         
         L.control.layers(baseMaps, overlayMaps).addTo(map);
 
