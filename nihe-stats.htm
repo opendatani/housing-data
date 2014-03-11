@@ -87,31 +87,23 @@
             niheArrearsRound[i] = Math.round(obj.Average_Current_Debtor_Arrear.substring(1));
         }
         
-        var housingLayer = L.layerGroup(markers);
-        var myStyle = {
+        var boundaryStyle = {
             "color": "darkorange",
             "weight": 2,
             "opacity": 0.5
         };
-        var lgdLayer = L.geoJson(lgdBoundaries, { style: myStyle } );
+        var lgdLayer = L.geoJson(lgdBoundaries, { style: boundaryStyle } );
+        
+        var housingLayer = L.layerGroup(markers);
+        map.addLayer(housingLayer);
         
         var baseMaps = {
           "Housing": housingLayer
         };
-
         var overlayMaps = {
           "Boundaries": lgdLayer
-        };
-        
-        map.addLayer(housingLayer);
-        
+        };      
         L.control.layers(baseMaps, overlayMaps).addTo(map);
-        
-
-        
-        
-        // L.geoJson(lgdBoundaries, { style: myStyle } ).addTo(map);
-
     </script>
 
 
