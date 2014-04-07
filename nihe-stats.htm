@@ -66,18 +66,55 @@
         var niheArrears = new Array();
         var niheArrearsRound = new Array();
                 
-        var markers = [];
+        var housingAllocation = [];
+        var housingPoints = [];
+        var housingMonths = [];
+        
+       
 
-        for (var i = 0; i < json.length; i++) {
+   for (var i = 0; i < json.length; i++) {
             var obj = json[i];
             var html = '<h3>Area: ' + obj.Area + '</h3>';
             html += 'Total allocations: ' + obj.Total_Allocations + '<br />';
-            html += 'Average points for allocation: ' + obj.Average_Points + '<br />';
-            html += 'Average month on waiting list: ' + obj.Average_Months_On_List + '<br />';
-            html += 'Average current debtor arrear: ' + obj.Average_Current_Debtor_Arrear + '';
-
-            var housingMarker = L.marker([obj.Latitude, obj.Longitude]).bindPopup(html);
-            markers.push(housingMarker);
+          
+          	var html1 = '<h3>Area: ' + obj.Area + '</h3>';
+            html1 += 'Average Points: ' + obj.Average_Points + '<br />';
+            
+            var html2 = '<h3>Area: ' + obj.Area + '</h3>';
+            html2 += 'Average Months On List: ' + obj.Average_Months_On_List + '<br />';
+            
+            var html3 = '<h3>Area: ' + obj.Area + '</h3>';
+            html3 += 'Average Current Debtor Arrear: ' + obj.Average_Current_Debtor_Arrear + '<br />';
+          	
+			var housingA = L.circle([obj.Latitude, obj.Longitude],obj.Total_Allocations, {
+            color: 'blue',
+            fillcolor: '#00E',
+            fillOpacity: 0.1
+            })
+            .bindPopup(html)
+            .addTo(map);
+            housingAllocation.push(housingA)
+            
+          
+          	var housingP = L.circle([obj.Latitude, obj.Longitude],obj.Average_Points, {
+            color: 'yellow',
+            fillcolor: '#ff0',
+            fillOpacity: 0.1
+            })
+            .bindPopup(html1)
+            .addTo(map);
+          	housingPoints.push(housingP)
+            
+            var housingM = L.circle([obj.Latitude, obj.Longitude],obj.Average_Months_On_List, {
+            color: 'green',
+            fillcolor: '#0f0',
+            fillOpacity: 0.1
+            })
+            .bindPopup(html2)
+            .addTo(map);
+            housingMonths.push(housingM)
+         	
+            
 
             niheAreas[i] = obj.Area;
             niheAllocations[i] = obj.Total_Allocations;
@@ -94,21 +131,36 @@
         };
         var lgdLayer = L.geoJson(lgdBoundaries, { style: boundaryStyle } );
         
-        var housingLayer = L.layerGroup(markers);
-        map.addLayer(housingLayer);
+        var housingLayer1 = L.layerGroup(housingAllocation);
+        map.addLayer(housingLayer1);
+        
+        var housingLayer2 = L.layerGroup(housingPoints);
+        map.addLayer(housingLayer2);
+        
+        var housingLayer3 = L.layerGroup(housingMonths);
+        map.addLayer(housingLayer3);
+        
+        var minimal = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib });
+		map.addLayer(minimal);
+        
+       
         
         var baseMaps = {
-          "Housing": housingLayer
+            "Boundaries": lgdLayer,
+			"Minimal": minimal
+           
         };
-        var overlayMaps = {
-          "Boundaries": lgdLayer
-        };      
-        L.control.layers(baseMaps, overlayMaps).addTo(map);
+         var overlayMaps = {
+        	"Housing Allocation": housingLayer1,
+            "Housing Points": housingLayer2,
+        	"Housing Months": housingLayer3
+        };     
+        L.control.layers(baseMaps ,overlayMaps).addTo(map);
     </script>
 
 
     <script type="text/javascript">
-        (function ($) { // encapsulate jQuery
+        (function ($) { // encapsulate jQußery
             $(function () {
                 $('#chartAllocations').highcharts({
                     chart: {
