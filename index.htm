@@ -10,19 +10,19 @@
     <!-- Leaflet -->
     <link rel="stylesheet" href="http://leafletjs.com/dist/leaflet.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="dist/leaflet.ie.css" /><![endif]-->
-    <script src="http://leafletjs.com/dist/leaflet.js"></script>
+    <script src="js/leaflet.js"></script>
 
     <!-- Highlight Charts -->
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <script src="http://code.highcharts.com/highcharts.js"></script>
-    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
     
     <script src="data/housing_data.js"></script>
     <script src="data/lgd_boundaries.js"></script>
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/style.css" />
 
 
 </head>
@@ -86,35 +86,36 @@
             var html3 = '<h3>Area: ' + obj.Area + '</h3>';
             html3 += 'Average Current Debtor Arrear: ' + obj.Average_Current_Debtor_Arrear + '<br />';
           	
-			var housingA = L.circle([obj.Latitude, obj.Longitude],obj.Total_Allocations, {
-            color: 'blue',
-            fillcolor: '#00E',
-            fillOpacity: 0.1
+			var housingA = L.circle([obj.Latitude, obj.Longitude],obj.Total_Allocations * 15, {
+              color: "blue",
+              opacity: '1',
+              weight: '1',
+              fillColor: 'blue',
+              fillOpacity: 0.3
             })
             .bindPopup(html)
-            .addTo(map);
             housingAllocation.push(housingA)
             
           
-          	var housingP = L.circle([obj.Latitude, obj.Longitude],obj.Average_Points, {
-            color: 'yellow',
-            fillcolor: '#ff0',
-            fillOpacity: 0.1
+          	var housingP = L.circle([obj.Latitude, obj.Longitude],obj.Average_Points * 100, {
+              color: 'red',
+              opacity: '1',
+              weight: '1',
+              fillColor: 'red',
+              fillOpacity: 0.3
             })
             .bindPopup(html1)
-            .addTo(map);
           	housingPoints.push(housingP)
             
-            var housingM = L.circle([obj.Latitude, obj.Longitude],obj.Average_Months_On_List, {
-            color: 'green',
-            fillcolor: '#0f0',
-            fillOpacity: 0.1
+            var housingM = L.circle([obj.Latitude, obj.Longitude],obj.Average_Months_On_List * 500, {
+              color: "green",
+              opacity: '1',
+              weight: '1',
+              fillColor: "green",
+              fillOpacity: 0.3
             })
             .bindPopup(html2)
-            .addTo(map);
-            housingMonths.push(housingM)
-         	
-            
+            housingMonths.push(housingM)  
 
             niheAreas[i] = obj.Area;
             niheAllocations[i] = obj.Total_Allocations;
@@ -132,28 +133,22 @@
         var lgdLayer = L.geoJson(lgdBoundaries, { style: boundaryStyle } );
         
         var housingLayer1 = L.layerGroup(housingAllocation);
-        map.addLayer(housingLayer1);
         
         var housingLayer2 = L.layerGroup(housingPoints);
-        map.addLayer(housingLayer2);
         
         var housingLayer3 = L.layerGroup(housingMonths);
-        map.addLayer(housingLayer3);
         
         var minimal = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib });
-		map.addLayer(minimal);
-        
-       
-        
+		    map.addLayer(minimal);
+              
         var baseMaps = {
-            "Boundaries": lgdLayer,
-			"Minimal": minimal
-           
+          	"Housing Allocation": housingLayer1,
+            "Housing Points":     housingLayer2,
+          	"Housing Months":     housingLayer3
         };
-         var overlayMaps = {
-        	"Housing Allocation": housingLayer1,
-            "Housing Points": housingLayer2,
-        	"Housing Months": housingLayer3
+        
+        var overlayMaps = {
+          "New Boundaries": lgdLayer
         };     
         L.control.layers(baseMaps ,overlayMaps).addTo(map);
     </script>
