@@ -20,6 +20,7 @@
     
     <script src="data/housing_data.js"></script>
     <script src="data/lgd_boundaries.js"></script>
+    <script src="data/lgd_boundaries_current.js"></script>
 
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/style.css" />
@@ -130,7 +131,16 @@
             "weight": 2,
             "opacity": 0.5
         };
+
+        var boundaryStyle2 = {
+            "color": "blue",
+            "weight": 5,
+            "opacity": 0.2
+        };
+
         var lgdLayer = L.geoJson(lgdBoundaries, { style: boundaryStyle } );
+
+        var lgdLayer = L.geoJson(lgdBoundaries2, { style: boundaryStyle2 } );
         
         var housingLayer1 = L.layerGroup(housingAllocation);
         
@@ -148,9 +158,14 @@
         };
         
         var overlayMaps = {
-          "New Boundaries": lgdLayer
-        };     
-        L.control.layers(baseMaps ,overlayMaps).addTo(map);
+          "Proposed LGDs (2015)": lgdLayer
+        };
+        
+        var overlayMaps2 = {
+          "Current LGDs": lgdLayer
+        }; 
+
+        L.control.layers(baseMaps ,overlayMaps ,overlayMaps2).addTo(map);
     </script>
 
 
